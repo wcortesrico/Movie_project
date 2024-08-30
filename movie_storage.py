@@ -8,3 +8,4 @@ def save_movies(movies):
     data_json = json.dumps(movies)
     with open("data.json", "w") as new_file:
         json_file = new_file.write(data_json)
+

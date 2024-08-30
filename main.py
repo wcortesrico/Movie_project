@@ -54,37 +54,32 @@ def add_movie():
             movie_year = movie_info["Year"]
             movie_rate = float(movie_info["imdbRating"])
             movie_poster = movie_info["Poster"]
-            list_of_movies = movie_storage.get_movies()
-            list_of_movies.append(
-                {"name": movie_name, "rating": movie_rate, "year": movie_year, "poster_url": movie_poster})
-            movie_storage.save_movies(list_of_movies)
+            movie_storage.add_movie(movie_name, movie_year, movie_rate, movie_poster)
+            print("Movie added successfully")
 
 
 def delete_movie():
     # This function removes a specific movie by name
     list_of_movies = movie_storage.get_movies()
     removed_item = input("Delete movie: ")
-    movie_in_list = False
     for item in list_of_movies:
         if removed_item in item.values():
-            movie_in_list = True
-            list_of_movies.remove(item)
+            movie_storage.delete_movie(removed_item)
             break
-    if movie_in_list == False:
+    else:
         print("Movie not in list")
 
-    movie_storage.save_movies(list_of_movies)
 
 def update_movie():
     list_of_movies = movie_storage.get_movies()
     movie_name = input("Enter movie name ")
+    movie_rate = float(input("Enter new rate "))
     for movie in list_of_movies:
         if movie_name in movie.values():
-            movie_rate = float(input("Enter new rate "))
-            movie["rating"] = movie_rate
-        else:
-            pass
-    movie_storage.save_movies(list_of_movies)
+            movie_storage.update_movie(movie_name, movie_rate)
+            break
+    else:
+        print("Movie not in list")
 
 def print_stats():
     list_of_movies = movie_storage.get_movies()
